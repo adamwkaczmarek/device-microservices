@@ -10,7 +10,7 @@
 #Setting the logging levels for the service
 logging:
   level:
-    com.netflix: WARN
+    com.netflix: DEBUG
     org.springframework.web: DEBUG
     com.thoughtmechanix: DEBUG
 
@@ -18,3 +18,6 @@ logging:
 # oauth2:
 #  resource:
 #    userInfoUri: http://localhost:8901/auth/user
+
+# Enabling H2 Console
+spring.h2.console.enabled: true

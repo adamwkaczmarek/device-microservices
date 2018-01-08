@@ -16,8 +16,7 @@ public class DeviceService {
     DeviceRepository deviceRepository;
 
     public List<DeviceDto> findAll(){
-        List<Device> all = deviceRepository.findAll();
-        return DeviceDto.toDtos(all);
+        return DeviceDto.toDtos(deviceRepository.findAll());
 
     }
 
