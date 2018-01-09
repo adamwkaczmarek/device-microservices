@@ -18,10 +18,10 @@ import javax.persistence.Table;
 public class Device {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "device_id", nullable = false)
     private String id;
 
-    @Column(name = "ip_adderss", nullable = false)
+    @Column(name = "ip_address", nullable = false)
     private String ipAddress;
 
     @Column(name = "listening_port", nullable = false)
@@ -35,5 +35,11 @@ public class Device {
          this.ipAddress=deviceDto.getIpAddress();
          this.listeningPort=deviceDto.getListeningPort();
          this.comment=deviceDto.getComment();
+    }
+
+    public void update(DeviceDto deviceDto){
+        this.ipAddress=deviceDto.getIpAddress();
+        this.listeningPort=deviceDto.getListeningPort();
+        this.comment=deviceDto.getComment();
     }
 }
