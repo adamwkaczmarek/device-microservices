@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "device")
@@ -30,16 +31,21 @@ public class Device {
     @Column(name = "comment", nullable = false)
     private String comment;
 
+    @Column(name= "last_registration_date", nullable = false)
+    private Date lastRegistrationDate;
+
     public Device(DeviceDto deviceDto) {
-         this.id=deviceDto.getId();
+         this.id=deviceDto.getDeviceId();
          this.ipAddress=deviceDto.getIpAddress();
          this.listeningPort=deviceDto.getListeningPort();
          this.comment=deviceDto.getComment();
+         lastRegistrationDate=new Date();
     }
 
     public void update(DeviceDto deviceDto){
         this.ipAddress=deviceDto.getIpAddress();
         this.listeningPort=deviceDto.getListeningPort();
         this.comment=deviceDto.getComment();
+        lastRegistrationDate=new Date();
     }
 }

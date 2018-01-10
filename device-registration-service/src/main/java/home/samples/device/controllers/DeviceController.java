@@ -3,6 +3,7 @@ package home.samples.device.controllers;
 import home.samples.device.dto.DeviceDto;
 import home.samples.device.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,15 +20,11 @@ public class DeviceController {
         return deviceService.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public DeviceDto addDevice(@RequestBody DeviceDto deviceDto){
-        return deviceService.add(deviceDto);
+    @RequestMapping(value="/register/{deviceId}", method = RequestMethod.POST)
+    public DeviceDto addOrUpdateDevice(@PathVariable String deviceId,@RequestBody DeviceDto deviceDto){
+        return deviceService.addOrUpdate(deviceId,deviceDto);
     }
 
-    @RequestMapping(value="/{deviceId}", method = RequestMethod.PUT)
-    public DeviceDto updateDevice(@PathVariable String deviceId,@RequestBody DeviceDto deviceDto){
-        return deviceService.update(deviceId,deviceDto);
-    }
 
     @RequestMapping(value="/{deviceId}" , method = RequestMethod.DELETE)
     public void deleteDevice(@PathVariable String deviceId){

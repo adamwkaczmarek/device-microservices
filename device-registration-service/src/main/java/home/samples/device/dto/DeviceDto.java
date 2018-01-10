@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 public class DeviceDto {
 
 
-    private String id;
+    private String deviceId;
     private String ipAddress;
     private String listeningPort;
     private String comment;
