@@ -14,20 +14,21 @@ import java.util.stream.Collectors;
 @Data
 public class DeviceStateDto {
 
-
     private String deviceId;
-    private String ipAddress;
-    private String listeningPort;
-    private String comment;
+    private Integer pinNumber;
+    private Boolean activated;
 
 
-     public static DeviceStateDto toDto(DeviceState deviceState) {
+    public static DeviceStateDto toDto(DeviceState deviceState) {
 
-         return new DeviceStateDto();
+        return new DeviceStateDto(deviceState.getDeviceStateId().getDeviceId(),
+                                  deviceState.getDeviceStateId().getPinNumber(),
+                                  deviceState.getActivated());
     }
 
-    public static List<DeviceStateDto> toDtos(List<DeviceState> deviceStateList){
-         return  deviceStateList.stream().map(deviceState -> toDto(deviceState)).collect(Collectors.toList());
+    public static List<DeviceStateDto> toDtos(List<DeviceState> deviceStateList) {
+        return deviceStateList.stream().map(deviceState -> toDto(deviceState))
+            .collect(Collectors.toList());
     }
 
 

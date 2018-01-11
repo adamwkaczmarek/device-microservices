@@ -1,1 +1,1 @@
-INSERT INTO deviceState (device_id , ip_address,listening_port,comment,last_registration_date ) VALUES ('tech_device', 'localhost', '8080','for development purpose',NOW());
+INSERT INTO device_state (device_id ,  pin_number , activated ) VALUES ('tech_device', 13, true);

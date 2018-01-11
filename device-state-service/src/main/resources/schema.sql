@@ -1,10 +1,9 @@
-DROP TABLE IF EXISTS deviceState;
+DROP TABLE IF EXISTS device_state;
 
-CREATE TABLE deviceState(
-  device_id         VARCHAR(100) PRIMARY KEY NOT NULL,
-  ip_address        VARCHAR(100) NOT NULL,
-  listening_port    VARCHAR(4) NOT NULL,
-  comment       TEXT ,
-  last_registration_date TIME NOT NULL
+CREATE TABLE device_state(
+  device_id         VARCHAR(100) NOT NULL,
+  pin_number        INTEGER NOT NULL,
+  activated         BOOLEAN NOT NULL,
+  CONSTRAINT device_state_pkey PRIMARY KEY (device_id,pin_number)
   );
 
