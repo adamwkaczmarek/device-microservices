@@ -32,7 +32,7 @@ public class DeviceState {
 
     }
 
-    public void update(DeviceStateDto deviceStateDto) {
-        this.activated=deviceStateDto.getActivated();
+    public void update(boolean activated) {
+        this.activated=activated;
     }
 }
