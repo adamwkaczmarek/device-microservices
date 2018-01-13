@@ -42,10 +42,7 @@ public class Device {
          lastRegistrationDate=new Date();
     }
 
-    public void update(DeviceDto deviceDto){
-        this.ipAddress=deviceDto.getIpAddress();
-        this.listeningPort=deviceDto.getListeningPort();
-        this.comment=deviceDto.getComment();
+    public void updateRegistrationDate(){
         lastRegistrationDate=new Date();
     }
 }

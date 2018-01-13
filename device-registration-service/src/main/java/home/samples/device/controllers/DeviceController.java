@@ -20,9 +20,14 @@ public class DeviceController {
         return deviceService.findAll();
     }
 
-    @RequestMapping(value="/register/{deviceId}", method = RequestMethod.POST)
-    public DeviceDto addOrUpdateDevice(@PathVariable String deviceId,@RequestBody DeviceDto deviceDto){
-        return deviceService.addOrUpdate(deviceId,deviceDto);
+    @RequestMapping(value="/register", method = RequestMethod.POST)
+    public DeviceDto addDevice(@RequestBody DeviceDto deviceDto){
+        return deviceService.add(deviceDto);
+    }
+
+    @RequestMapping(value="/register-activity/{deviceId}", method = RequestMethod.PUT)
+    public void registerDevice(@PathVariable String deviceId){
+        deviceService.register(deviceId);
     }
 
 

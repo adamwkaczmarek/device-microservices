@@ -2,6 +2,7 @@ package home.samples.device.services;
 
 
 import home.samples.device.dto.DeviceStateDto;
+import home.samples.device.exceptions.DeviceStateNotFoundException;
 import home.samples.device.model.DeviceState;
 import home.samples.device.model.DeviceStateId;
 import home.samples.device.repository.DeviceStateRepository;
@@ -34,7 +35,8 @@ public class DeviceStateService {
             DeviceState deviceState = deviceStateRepository.findOne(id);
             deviceState.update(activate);
             deviceStateRepository.save(deviceState);
-        }
+        }else
+            throw new DeviceStateNotFoundException();
     }
 
     public void deleteDeviceState(String deviceId, Integer pinNumber) {
@@ -42,13 +44,17 @@ public class DeviceStateService {
         if (deviceStateRepository.exists(id)) {
             DeviceState deviceState = deviceStateRepository.findOne(id);
             deviceStateRepository.delete(deviceState);
-        }
+        }else
+            throw new DeviceStateNotFoundException();
     }
 
     public void deleteAllDeviceStates(String deviceId) {
         List<DeviceState> devices = deviceStateRepository.findByDeviceId(deviceId);
-        if (!devices.isEmpty())
+        if (!devices.isEmpty()) {
             deviceStateRepository.delete(devices);
+        }else{
+            throw new DeviceStateNotFoundException();
+        }
     }
 
 }
