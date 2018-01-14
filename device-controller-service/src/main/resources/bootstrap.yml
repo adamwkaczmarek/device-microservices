@@ -1,6 +1,6 @@
 spring:
   application:
-    name: device-registration-service
+    name: device-controller-service
 profiles:
     active:
       default

@@ -11,13 +11,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DeviceService {
+public class DeviceRegistrationService {
 
     @Autowired
     DeviceRepository deviceRepository;
 
     public List<DeviceDto> findAll(){
         return DeviceDto.toDtos(deviceRepository.findAll());
+
+    }
+
+    public DeviceDto findById(String deviceId){
+        return DeviceDto.toDto(deviceRepository.findOne(deviceId));
 
     }
 

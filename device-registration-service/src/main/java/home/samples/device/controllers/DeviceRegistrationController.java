@@ -1,38 +1,42 @@
 package home.samples.device.controllers;
 
 import home.samples.device.dto.DeviceDto;
-import home.samples.device.services.DeviceService;
+import home.samples.device.services.DeviceRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value="v1/devices")
-public class DeviceController {
+public class DeviceRegistrationController {
 
     @Autowired
-    DeviceService deviceService;
+    DeviceRegistrationService deviceRegistrationService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<DeviceDto> getAllDevices(){
-        return deviceService.findAll();
+        return deviceRegistrationService.findAll();
+    }
+
+    @RequestMapping(value="/{deviceId}" , method = RequestMethod.GET)
+    public DeviceDto getDevice(@PathVariable String deviceId){
+        return deviceRegistrationService.findById(deviceId);
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public DeviceDto addDevice(@RequestBody DeviceDto deviceDto){
-        return deviceService.add(deviceDto);
+        return deviceRegistrationService.add(deviceDto);
     }
 
     @RequestMapping(value="/register-activity/{deviceId}", method = RequestMethod.PUT)
     public void registerDevice(@PathVariable String deviceId){
-        deviceService.register(deviceId);
+        deviceRegistrationService.register(deviceId);
     }
 
 
     @RequestMapping(value="/{deviceId}" , method = RequestMethod.DELETE)
     public void deleteDevice(@PathVariable String deviceId){
-        deviceService.delete(deviceId);
+        deviceRegistrationService.delete(deviceId);
     }
 }
