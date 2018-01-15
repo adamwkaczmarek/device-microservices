@@ -1,5 +1,6 @@
 package home.samples.device.services;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import home.samples.device.clients.DeviceClient;
 import home.samples.device.clients.DeviceRegistrationClient;
 import home.samples.device.dto.DeviceDto;
@@ -15,16 +16,17 @@ public class DeviceControllerService {
     @Autowired
     DeviceClient deviceClient;
 
-
-    public void refreshDeviceState(String deviceId){
+    @HystrixCommand
+    public void refreshDeviceState(String deviceId) {
         DeviceDto device = deviceRegistrationClient.getDevice(deviceId);
 
-        deviceClient.refreshDeviceState(device.getIpAddress(),device.getListeningPort());
+        deviceClient.refreshDeviceState(device.getIpAddress(), device.getListeningPort());
 
     }
 
-    public String getDeviceInfo(String deviceId){
+    @HystrixCommand
+    public String getDeviceInfo(String deviceId) {
         DeviceDto device = deviceRegistrationClient.getDevice(deviceId);
-       return deviceClient.getDeviceInfo(device.getIpAddress(),device.getListeningPort());
+        return deviceClient.getDeviceInfo(device.getIpAddress(), device.getListeningPort());
     }
 }

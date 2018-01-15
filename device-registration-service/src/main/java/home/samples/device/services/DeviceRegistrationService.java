@@ -22,6 +22,9 @@ public class DeviceRegistrationService {
     }
 
     public DeviceDto findById(String deviceId){
+        if(!deviceRepository.exists(deviceId))
+            throw new DeviceNotFoundException();
+
         return DeviceDto.toDto(deviceRepository.findOne(deviceId));
 
     }
