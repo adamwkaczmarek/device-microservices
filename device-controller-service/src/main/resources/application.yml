@@ -12,7 +12,7 @@ logging:
   level:
     com.netflix: DEBUG
     org.springframework.web: DEBUG
-    com.thoughtmechanix: DEBUG
+    home.samples: DEBUG
 
 #security:
 # oauth2:
