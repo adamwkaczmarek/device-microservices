@@ -18,17 +18,17 @@ public class RfidDataDto {
     private Date creationDate;
     private String deviceId;
 
-      public static RfidDataDto toDto(RfidData rfidData) {
+    public static RfidDataDto toDto(RfidData rfidData) {
         return new RfidDataDto(
-            rfidData.getId(),
-            rfidData.getUidTag(),
-            rfidData.getCreationDate(),
-            rfidData.getDeviceId()
+                rfidData.getId(),
+                rfidData.getUidTag(),
+                rfidData.getCreationDate(),
+                rfidData.getDeviceId()
         );
     }
 
-    public static List<RfidDataDto> toDtos(List<RfidData> rfidDataList){
-         return  rfidDataList.stream().map(rfiData -> toDto(rfiData)).collect(Collectors.toList());
+    public static List<RfidDataDto> toDtos(List<RfidData> rfidDataList) {
+        return rfidDataList.stream().map(rfiData -> toDto(rfiData)).collect(Collectors.toList());
     }
 
 }
