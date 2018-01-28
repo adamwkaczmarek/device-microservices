@@ -1,0 +1,101 @@
+version: '2'
+services:
+  eureka-service:
+     image: homesamples/eureka-service:homesamples
+     ports:
+         - "8761:8761"
+  config-service:
+      image: homesamples/config-service:homesamples
+      ports:
+         - "8888:8888"
+      environment:
+         EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+         EUREKASERVER_PORT: "8761"
+         ENCRYPT_KEY:       "IMSYMMETRIC"
+
+  database:
+      image: postgres:9.5
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=p0stgr@s
+        - POSTGRES_DB=devices_db
+
+  zuul-service:
+    image: homesamples/zuul-service:homesamples
+    ports:
+      - "5555:5555"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "5555"
+      CONFIGSERVER_URI: "http://config-service:8888"
+      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+      EUREKASERVER_PORT:        "8761"
+      CONFIGSERVER_PORT:        "8888"
+
+  authentication-service:
+      image: homesamples/authentication-service:homesamples
+      ports:
+        - "8901:8901"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "8901"
+        DATABASE_PORT:     5432
+        CONFIGSERVER_PORT: 8888
+        EUREKASERVER_PORT: 8761
+        CONFIGSERVER_URI: "http://config-service:8888"
+        EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+        ENCRYPT_KEY:       "IMSYMMETRIC"
+
+
+  device-registration-service:
+      image: homesamples/device-registration-service:homesamples
+      ports:
+        - "8083:8083"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "8083"
+        CONFIGSERVER_URI: "http://config-service:8888"
+        EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+        AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
+        CONFIGSERVER_PORT:   "8888"
+        DATABASE_PORT:     "5432"
+        EUREKASERVER_PORT:   "8761"
+        ZULLSERVER_PORT: "5555"
+        AUTHSERVER_PORT: "8091"
+        ENCRYPT_KEY:       "IMSYMMETRIC"
+
+  device-data-service:
+        image: homesamples/device-data-service:homesamples
+        ports:
+          - "8086:8086"
+        environment:
+          PROFILE: "default"
+          SERVER_PORT: "8086"
+          CONFIGSERVER_URI: "http://config-service:8888"
+          EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+          AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
+          CONFIGSERVER_PORT:   "8888"
+          DATABASE_PORT:     "5432"
+          EUREKASERVER_PORT:   "8761"
+          ZULLSERVER_PORT: "5555"
+          AUTHSERVER_PORT: "8091"
+          ENCRYPT_KEY:       "IMSYMMETRIC"
+
+  device-state-service:
+        image: homesamples/device-state-service:homesamples
+        ports:
+          - "8084:8084"
+        environment:
+          PROFILE: "default"
+          SERVER_PORT: "8084"
+          CONFIGSERVER_URI: "http://config-service:8888"
+          EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+          AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
+          CONFIGSERVER_PORT:   "8888"
+          DATABASE_PORT:     "5432"
+          EUREKASERVER_PORT:   "8761"
+          ZULLSERVER_PORT: "5555"
+          AUTHSERVER_PORT: "8091"
+          ENCRYPT_KEY:       "IMSYMMETRIC"
