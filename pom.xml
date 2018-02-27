@@ -13,7 +13,6 @@
         <module>device-state-service</module>
         <module>device-controller-service</module>
         <module>device-data-service</module>
-        <module>common-utils</module>
     </modules>
 
     <parent>
