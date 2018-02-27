@@ -8,6 +8,18 @@
     <artifactId>device-registration-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-adamwkaczmarek-home-samples</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/adamwkaczmarek/home-samples</url>
+        </repository>
+    </repositories>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
