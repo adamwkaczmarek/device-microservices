@@ -1,11 +1,12 @@
 spring:
   application:
     name: device-state-service
-profiles:
+  profiles:
     active:
       default
-cloud:
+  cloud:
     config:
       enabled: true
+      label: devices-ms-config
 
 
