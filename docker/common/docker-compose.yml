@@ -9,55 +9,124 @@ services:
 #        - POSTGRES_USER=postgres
 #        - POSTGRES_PASSWORD=p0stgr@s
 #        - POSTGRES_DB=devices_db
+ eureka-service:
+   image: akaczmarek/eureka-service:${BUILD_NAME_SCT}
+   mem_limit: 3000m
+   ports:
+      - "8761:8761"
+ config-service:
+   image: akaczmarek/config-service:${BUILD_NAME_SCT}
+   mem_limit: 2500m
+   ports:
+     - "8888:8888"
+   links:
+     - "eureka-service:eureka-service"
+   environment:
+     EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+     EUREKASERVER_PORT: "8761"
+     ENCRYPT_KEY: "SPRING_CLOUD_DEV"
+ zuul-service:
+    image: akaczmarek/zuul-service:${BUILD_NAME_SCT}
+    mem_limit: 3000m
+    ports:
+      - "5555:5555"
+    links:
+      - "config-service:config-service"
+      - "eureka-service:eureka-service"
+    environment:
+      PROFILE: "aws-dev"
+      SERVER_PORT: "5555"
+      CONFIGSERVER_URI: "http://config-service:8888"
+      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+      EUREKASERVER_PORT:        "8761"
+      CONFIGSERVER_PORT:        "8888"
 
 
-  device-registration-service:
-      image: homesamples/device-registration-service:homesamples
-      ports:
-        - "8083:8083"
-      environment:
-        PROFILE: "aws-dev"
-        SERVER_PORT: "8083"
-        CONFIGSERVER_URI: "http://config-service:8888"
-        EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
-        AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
-        CONFIGSERVER_PORT:   "8888"
-        DATABASE_PORT:     "5432"
-        EUREKASERVER_PORT:   "8761"
-        ZULLSERVER_PORT: "5555"
-        AUTHSERVER_PORT: "8091"
-        ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
+ authentication-service:
+    image: akaczmarek/authentication-service:${BUILD_NAME_SCT}
+    mem_limit: 2500m
+    ports:
+      - "8901:8901"
+    links:
+      - "config-service:config-service"
+      - "eureka-service:eureka-service"
+      - "zuul-service:zuul-service"
+    environment:
+      PROFILE: "aws-dev"
+      SERVER_PORT: "8901"
+      DATABASE_PORT:     5432
+      CONFIGSERVER_PORT: 8888
+      EUREKASERVER_PORT: 8761
+      CONFIGSERVER_URI: "http://config-service:8888"
+      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+      ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
 
-  device-data-service:
-        image: homesamples/device-data-service:homesamples
-        ports:
-          - "8086:8086"
-        environment:
-          PROFILE: "aws-dev"
-          SERVER_PORT: "8086"
-          CONFIGSERVER_URI: "http://config-service:8888"
-          EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
-          AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
-          CONFIGSERVER_PORT:   "8888"
-          DATABASE_PORT:     "5432"
-          EUREKASERVER_PORT:   "8761"
-          ZULLSERVER_PORT: "5555"
-          AUTHSERVER_PORT: "8091"
-          ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
+ device-registration-service:
+    image: akaczmarek/device-registration-service:${BUILD_NAME}
+    mem_limit: 2500m
+    ports:
+      - "8083:8083"
+    links:
+      - "config-service:config-service"
+      - "eureka-service:eureka-service"
+      - "zuul-service:zuul-service"
+      - "authentication-service"
+    environment:
+      PROFILE: "aws-dev"
+      SERVER_PORT: "8083"
+      CONFIGSERVER_URI: "http://config-service:8888"
+      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+      AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
+      CONFIGSERVER_PORT:   "8888"
+      DATABASE_PORT:     "5432"
+      EUREKASERVER_PORT:   "8761"
+      ZULLSERVER_PORT: "5555"
+      AUTHSERVER_PORT: "8091"
+      ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
 
-  device-state-service:
-        image: homesamples/device-state-service:homesamples
-        ports:
-          - "8084:8084"
-        environment:
-          PROFILE: "aws-dev"
-          SERVER_PORT: "8084"
-          CONFIGSERVER_URI: "http://config-service:8888"
-          EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
-          AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
-          CONFIGSERVER_PORT:   "8888"
-          DATABASE_PORT:     "5432"
-          EUREKASERVER_PORT:   "8761"
-          ZULLSERVER_PORT: "5555"
-          AUTHSERVER_PORT: "8091"
-          ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
+ device-data-service:
+    image: akaczmarek/device-data-service:${BUILD_NAME}
+    mem_limit: 2500m
+    ports:
+      - "8086:8086"
+    links:
+      - "config-service:config-service"
+      - "eureka-service:eureka-service"
+      - "zuul-service:zuul-service"
+      - "authentication-service"
+    environment:
+      PROFILE: "aws-dev"
+      SERVER_PORT: "8086"
+      CONFIGSERVER_URI: "http://config-service:8888"
+      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+      AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
+      CONFIGSERVER_PORT:   "8888"
+      DATABASE_PORT:     "5432"
+      EUREKASERVER_PORT:   "8761"
+      ZULLSERVER_PORT: "5555"
+      AUTHSERVER_PORT: "8091"
+      ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
+
+# device-state-service:
+#    image: akaczmarek/device-state-service:${BUILD_NAME}
+#    mem_limit: 2500m
+#    ports:
+#      - "8084:8084"
+#    links:
+#      - "config-service:config-service"
+#      - "eureka-service:eureka-service"
+#      - "zuul-service:zuul-service"
+#      - "authentication-service"
+#    environment:
+#      PROFILE: "aws-dev"
+#      SERVER_PORT: "8084"
+#      CONFIGSERVER_URI: "http://config-service:8888"
+#      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
+#      AUTHSERVER_URI:  "http://authentication-service:8901/auth/user"
+#      CONFIGSERVER_PORT:   "8888"
+#      DATABASE_PORT:     "5432"
+#      EUREKASERVER_PORT:   "8761"
+#      ZULLSERVER_PORT: "5555"
+#      AUTHSERVER_PORT: "8091"
+#      ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
+
