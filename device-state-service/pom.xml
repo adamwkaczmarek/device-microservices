@@ -6,7 +6,7 @@
 
     <artifactId>device-state-service</artifactId>
     <groupId>home.samples</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <repositories>
@@ -31,8 +31,8 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>home.samples.device.Application</start-class>
-        <docker.image.name>homesamples/device-state-service</docker.image.name>
-        <docker.image.tag>homesamples</docker.image.tag>
+        <docker.image.name>akaczmarek/device-state-service</docker.image.name>
+        <docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
     </properties>
 
     <dependencyManagement>

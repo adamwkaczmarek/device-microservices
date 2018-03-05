@@ -1,11 +1,12 @@
 spring:
   application:
     name: device-registration-service
-profiles:
+  profiles:
     active:
       default
-cloud:
+  cloud:
     config:
-      enabled: false
+      enabled: true
+      label: devices-ms-config
 
 
