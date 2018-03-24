@@ -1,1 +1,1 @@
-INSERT INTO device (device_id , ip_address,listening_port,comment,last_registration_date ) VALUES ('tech_device', 'localhost', '8080','for development purpose',NOW());
+INSERT INTO device (device_id , arn_endpoint,topic,device_desc,last_registration_date ) VALUES ('tech_device', 'test_arn_endpoint', 'test_topic','for development purpose',NOW());

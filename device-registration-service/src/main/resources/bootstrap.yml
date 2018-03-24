@@ -3,10 +3,22 @@ spring:
     name: device-registration-service
   profiles:
     active:
-      default
+      aws-dev
   cloud:
     config:
       enabled: true
       label: devices-ms-config
+
+cloud:
+    aws:
+      credentials:
+        accessKey: AKIAJRHYCE6NRKHXAEMA
+        secretKey: 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
+      region:
+        static: eu-central-1
+
+
+queue:
+    registration: RegisterDevicesQueue
 
 

@@ -32,7 +32,7 @@ public class DeviceRegistrationController {
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public DeviceDto addDevice(@RequestBody DeviceDto deviceDto){
-        return deviceRegistrationService.add(deviceDto);
+        return deviceRegistrationService.addOrUpdate(deviceDto);
     }
 
     @RequestMapping(value="/register-activity/{deviceId}", method = RequestMethod.PUT)
