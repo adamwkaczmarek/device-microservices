@@ -12,8 +12,8 @@ spring:
 cloud:
     aws:
       credentials:
-        accessKey: AKIAJRHYCE6NRKHXAEMA
-        secretKey: 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
+        accessKey: <ACCESSKEY>
+        secretKey: <SECRETKEY>
       region:
         static: eu-central-1
 
