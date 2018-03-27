@@ -5,7 +5,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
@@ -25,10 +24,11 @@ public class JmsConfig {
 
     private final SQSConnectionFactory connectionFactory;
 
-    public JmsConfig(
-        @Value("${cloud.aws.credentials.accessKey}") String awsAccessKey,
-        @Value("${cloud.aws.credentials.secretKey}") String awsSecretKey,
-        @Value("${cloud.aws.region.static}") String awsRegion) {
+
+    public JmsConfig() {
+        String awsAccessKey = System.getenv("AWS_KEY_ID");
+        String awsSecretKey = System.getenv("AWS_SECRET_KEY");
+        String awsRegion = System.getenv("AWS_REGION");
 
         connectionFactory = SQSConnectionFactory.builder()
             .withRegion(Region.getRegion(Regions.fromName(awsRegion)))

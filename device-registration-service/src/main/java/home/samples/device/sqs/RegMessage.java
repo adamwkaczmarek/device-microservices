@@ -22,4 +22,5 @@ public class RegMessage {
            this.topic=reported.get("topic");
            this.deviceDesc=reported.get("deviceDesc");
     }
+
 }

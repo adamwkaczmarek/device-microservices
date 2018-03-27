@@ -31,12 +31,18 @@ public class DeviceRegistrationService {
     }
 
 
-    public DeviceDto addOrUpdate(DeviceDto deviceDto){
-           return DeviceDto.toDto(deviceRepository.save(new Device(deviceDto)));
+    public DeviceDto add(DeviceDto deviceDto){
+        if(!deviceRepository.exists(deviceDto.getDeviceId()))
+            return DeviceDto.toDto(deviceRepository.save(new Device(deviceDto)));
+        else
+           return  deviceDto;
     }
 
-    public DeviceDto addOrUpdate(RegMessage regMessage){
+    public DeviceDto add(RegMessage regMessage){
+         if(!deviceRepository.exists(regMessage.getDeviceId()))
            return DeviceDto.toDto(deviceRepository.save(new Device(regMessage)));
+         else
+             return DeviceDto.toDto(regMessage);
     }
 
     public void register(String deviceId){

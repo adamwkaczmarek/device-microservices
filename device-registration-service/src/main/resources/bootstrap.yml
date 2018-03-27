@@ -9,16 +9,8 @@ spring:
       enabled: true
       label: devices-ms-config
 
-cloud:
-    aws:
-      credentials:
-        accessKey: <ACCESSKEY>
-        secretKey: <SECRETKEY>
-      region:
-        static: eu-central-1
-
-
 queue:
     registration: RegisterDevicesQueue
+    deviceHealth: DeviceHealthQueue
 
 
