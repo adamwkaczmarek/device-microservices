@@ -15,6 +15,7 @@ public class DeviceRegistrationClient {
     @Autowired
     RestTemplate restTemplate;
 
+
     public DeviceDto getDevice(String deviceId){
         ResponseEntity <DeviceDto>  restExchage=
                 restTemplate.exchange(

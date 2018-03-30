@@ -3,10 +3,10 @@ spring:
     name: device-registration-service
   profiles:
     active:
-      aws-dev
+      dev
   cloud:
     config:
-      enabled: true
+      enabled: false
       label: devices-ms-config
 
 queue:
