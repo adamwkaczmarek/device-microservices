@@ -1,14 +1,13 @@
 version: '2'
 services:
-
-#  database:
-#      image: postgres:9.5
-#      ports:
-#        - "5432:5432"
-#      environment:
-#        - POSTGRES_USER=postgres
-#        - POSTGRES_PASSWORD=p0stgr@s
-#        - POSTGRES_DB=devices_db
+ database:
+      image: postgres:9.5
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=dev_db
  eureka-service:
    image: akaczmarek/eureka-service:${BUILD_NAME_SCT}
    mem_limit: 3000m
