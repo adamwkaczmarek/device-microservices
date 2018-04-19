@@ -5,5 +5,5 @@ CREATE TABLE device(
   arn_endpoint      VARCHAR(100) NOT NULL,
   topic             VARCHAR(100) NOT NULL,
   device_desc       TEXT ,
-  last_registration_date TIME NOT NULL
+  last_registration_date TIMESTAMP NOT NULL
   );

@@ -5,10 +5,14 @@ import com.amazonaws.services.iot.client.AWSIotMqttClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import home.samples.device.clients.DeviceRegistrationClient;
 import home.samples.device.dto.DeviceDto;
+import home.samples.device.dto.DeviceMessageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 @Slf4j
@@ -19,7 +23,7 @@ public class DeviceControllerService {
 
 
     @HystrixCommand
-    public void sendMessageToDeviceTopic(String message,String deviceId) throws AWSIotException {
+    public void sendMessageToDeviceTopic(DeviceMessageDto messageDto,String deviceId) throws AWSIotException, IOException {
 
         DeviceDto device = deviceRegistrationClient.getDevice(deviceId);
         String awsAccessKeyId = System.getenv("AWS_KEY_ID");
@@ -29,7 +33,8 @@ public class DeviceControllerService {
                                                              RandomStringUtils.randomAlphanumeric(23), awsAccessKeyId, awsSecretKey);
         awsIotClient.connect();
         try {
-
+            ObjectMapper objectMapper = new ObjectMapper();
+            String message = objectMapper.writeValueAsString(messageDto);
 
             awsIotClient.publish(device.getTopic(),message);
         } catch (AWSIotException e) {

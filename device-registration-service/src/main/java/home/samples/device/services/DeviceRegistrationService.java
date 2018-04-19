@@ -17,13 +17,13 @@ public class DeviceRegistrationService {
     @Autowired
     DeviceRepository deviceRepository;
 
-    public List<DeviceDto> findAll(){
+    public List<DeviceDto> findAll() {
         return DeviceDto.toDtos(deviceRepository.findAll());
 
     }
 
-    public DeviceDto findById(String deviceId){
-        if(!deviceRepository.exists(deviceId))
+    public DeviceDto findById(String deviceId) {
+        if (!deviceRepository.exists(deviceId))
             throw new DeviceNotFoundException();
 
         return DeviceDto.toDto(deviceRepository.findOne(deviceId));
@@ -31,36 +31,36 @@ public class DeviceRegistrationService {
     }
 
 
-    public DeviceDto add(DeviceDto deviceDto){
-        if(!deviceRepository.exists(deviceDto.getDeviceId()))
+    public DeviceDto add(DeviceDto deviceDto) {
+        if (!deviceRepository.exists(deviceDto.getDeviceId()))
             return DeviceDto.toDto(deviceRepository.save(new Device(deviceDto)));
-        else
-           return  deviceDto;
+        else {
+            Device device = deviceRepository.findOne(deviceDto.getDeviceId());
+            device.updateRegistrationDate();
+            return DeviceDto.toDto(deviceRepository.save(device));
+        }
     }
 
-    public DeviceDto add(RegMessage regMessage){
-         if(!deviceRepository.exists(regMessage.getDeviceId()))
-           return DeviceDto.toDto(deviceRepository.save(new Device(regMessage)));
-         else
-             return DeviceDto.toDto(regMessage);
+    public DeviceDto add(RegMessage regMessage) {
+        return  add(DeviceDto.toDto(regMessage));
     }
 
-    public void register(String deviceId){
+    public void register(String deviceId) {
 
-        if(deviceRepository.exists(deviceId)){
+        if (deviceRepository.exists(deviceId)) {
             Device device = deviceRepository.findOne(deviceId);
             device.updateRegistrationDate();
             deviceRepository.save(device);
-       }else
-           throw new DeviceNotFoundException();
+        } else
+            throw new DeviceNotFoundException();
 
     }
 
-    public void delete(String deviceId){
-        if(deviceRepository.exists(deviceId)){
+    public void delete(String deviceId) {
+        if (deviceRepository.exists(deviceId)) {
             Device device = deviceRepository.findOne(deviceId);
             deviceRepository.delete(device);
-        }else
+        } else
             throw new DeviceNotFoundException();
 
     }
