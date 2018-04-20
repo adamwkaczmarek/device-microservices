@@ -16,11 +16,12 @@ public class RegMessage {
     @SuppressWarnings("unchecked")
     @JsonProperty("state")
     private void unpackNested(Map<String,Object> state) {
-        Map<String,String> reported = (Map<String,String>)state.get("reported");
-           this.deviceId = reported.get("deviceId");
-           this.arnEndpoint=reported.get("arnEndpoint");
-           this.topic=reported.get("topic");
-           this.deviceDesc=reported.get("deviceDesc");
+        Map<String,Object> reported = (Map<String,Object>)state.get("reported");
+           this.deviceId = (String)reported.get("deviceId");
+           Map<String,String> deviceDetails = (Map<String,String>)reported.get("deviceDetails");
+           this.arnEndpoint=deviceDetails.get("arnEndpoint");
+           this.topic=deviceDetails.get("topic");
+           this.deviceDesc=deviceDetails.get("deviceDesc");
     }
 
 }
