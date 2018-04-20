@@ -24,10 +24,10 @@ public class Consumer {
     public void processRegMessage(@Payload String message) throws IOException {
         String decodedMsg = new String(Base64.decodeBase64(message));
         log.info("Processing {}  in queue registration", decodedMsg);
-        RegMessage regMessage = new ObjectMapper()
-            .readerFor(RegMessage.class)
+        RegMsg regMsg = new ObjectMapper()
+            .readerFor(RegMsg.class)
             .readValue(decodedMsg.trim());
-        DeviceDto deviceDto = deviceRegistrationService.add(regMessage);
+        DeviceDto deviceDto = deviceRegistrationService.add(regMsg);
         log.info("Device {} updated !" , deviceDto.getDeviceId());
 
     }

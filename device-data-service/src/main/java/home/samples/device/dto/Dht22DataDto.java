@@ -2,7 +2,6 @@ package home.samples.device.dto;
 
 
 import home.samples.device.model.Dht22Data;
-import home.samples.device.model.RfidData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +27,9 @@ public class Dht22DataDto {
 
     private String deviceId;
 
+
+
+
     public static Dht22DataDto toDto(Dht22Data data) {
         return new Dht22DataDto(
                 data.getId(),
@@ -37,6 +39,8 @@ public class Dht22DataDto {
                 data.getDeviceId()
         );
     }
+
+
 
     public static List<Dht22DataDto > toDtos(List<Dht22Data> dataList) {
         return dataList.stream().map(data -> toDto(data)).collect(Collectors.toList());

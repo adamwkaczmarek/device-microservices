@@ -1,7 +1,7 @@
 package home.samples.device.dto;
 
 import home.samples.device.model.Device;
-import home.samples.device.sqs.RegMessage;
+import home.samples.device.sqs.RegMsg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,12 +31,12 @@ public class DeviceDto {
          );
     }
 
-       public static DeviceDto toDto(RegMessage regMessage) {
+       public static DeviceDto toDto(RegMsg regMsg) {
         return new DeviceDto(
-            regMessage.getDeviceId(),
-            regMessage.getArnEndpoint(),
-            regMessage.getTopic(),
-            regMessage.getDeviceDesc()
+            regMsg.getDeviceId(),
+            regMsg.getDeviceDetails().getArnEndpoint(),
+            regMsg.getDeviceDetails().getTopic(),
+            regMsg.getDeviceDetails().getDeviceDesc()
          );
     }
 

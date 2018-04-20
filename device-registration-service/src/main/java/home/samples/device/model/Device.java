@@ -1,7 +1,7 @@
 package home.samples.device.model;
 
 import home.samples.device.dto.DeviceDto;
-import home.samples.device.sqs.RegMessage;
+import home.samples.device.sqs.RegMsg;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,13 +43,6 @@ public class Device {
          lastRegistrationDate=new Date();
     }
 
-    public Device(RegMessage regMessage){
-         this.deviceId=regMessage.getDeviceId();
-         this.arnEndpoint=regMessage.getArnEndpoint();
-         this.topic=regMessage.getTopic();
-         this.deviceDesc=regMessage.getDeviceDesc();
-         lastRegistrationDate=new Date();
-    }
 
     public void updateRegistrationDate(){
         lastRegistrationDate=new Date();

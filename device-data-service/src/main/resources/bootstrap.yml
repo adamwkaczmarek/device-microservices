@@ -6,7 +6,10 @@ spring:
       dev
   cloud:
     config:
-      enabled: false
+      enabled: true
       label: devices-ms-config
+
+queue:
+  data: DeviceDataQueue
 
 

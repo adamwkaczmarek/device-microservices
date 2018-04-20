@@ -4,7 +4,7 @@ import home.samples.device.dto.DeviceDto;
 import home.samples.device.exceptions.DeviceNotFoundException;
 import home.samples.device.model.Device;
 import home.samples.device.repository.DeviceRepository;
-import home.samples.device.sqs.RegMessage;
+import home.samples.device.sqs.RegMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +41,8 @@ public class DeviceRegistrationService {
         }
     }
 
-    public DeviceDto add(RegMessage regMessage) {
-        return  add(DeviceDto.toDto(regMessage));
+    public DeviceDto add(RegMsg regMsg) {
+        return  add(DeviceDto.toDto(regMsg));
     }
 
     public void register(String deviceId) {
