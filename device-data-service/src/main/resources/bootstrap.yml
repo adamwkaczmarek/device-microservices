@@ -6,7 +6,7 @@ spring:
       dev
   cloud:
     config:
-      enabled: true
+      enabled: false
       label: devices-ms-config
 
 queue:

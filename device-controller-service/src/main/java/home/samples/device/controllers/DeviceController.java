@@ -1,7 +1,7 @@
 package home.samples.device.controllers;
 
 import com.amazonaws.services.iot.client.AWSIotException;
-import home.samples.device.dto.DeviceMessageDto;
+import home.samples.device.dto.SimpleMessageDto;
 import home.samples.device.services.DeviceControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,8 +21,8 @@ public class DeviceController {
     DeviceControllerService deviceControllerService;
 
 
-    @RequestMapping(value = "/send-msg/{deviceId}", method = RequestMethod.POST)
-    public void getDeviceInfo(@PathVariable String deviceId, @RequestBody DeviceMessageDto messageDto) throws AWSIotException, IOException {
+    @RequestMapping(value = "/send-simple-msg/{deviceId}", method = RequestMethod.POST)
+    public void sendSimpleMessage(@PathVariable String deviceId, @RequestBody SimpleMessageDto messageDto) throws AWSIotException, IOException {
         deviceControllerService.sendMessageToDeviceTopic(messageDto, deviceId);
     }
 }
