@@ -23,7 +23,7 @@ public class Consumer {
 
 
     @JmsListener(destination = "${queue.data}")
-    public void processRegMessage(@Payload String message) throws IOException {
+    public void processDhtDataMessage(@Payload String message) throws IOException {
         String decodedMsg = new String(Base64.decodeBase64(message));
         log.info("Processing {}  in queue registration", decodedMsg);
         Dht22Msg dht22DataMsg = new ObjectMapper()

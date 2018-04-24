@@ -21,6 +21,10 @@ logging:
 
 security.oauth2.resource.filter-order: 3
 security.signing-key: 345345fsdfsf5345
+security.jwt.client-id: springcloudtemp
+security.jwt.client-secret: sct_secret
+security.tech-user-name: device
+security.tech-password: test
 
 
 spring.jpa.database: "POSTGRESQL"
@@ -33,3 +37,4 @@ spring.datasource.password: "postgres"
 spring.datasource.testWhileIdle: "true"
 spring.datasource.validationQuery: "SELECT 1"
 spring.jpa.properties.hibernate.dialect: "org.hibernate.dialect.PostgreSQLDialect"
+
