@@ -24,12 +24,15 @@ public class AuthorizationCodeTokenService {
     private String clientSecret;
 
 
+
     @Autowired
-    AuthorizationCodeConfiguration configuration;
+    private AuthorizationCodeConfiguration configuration;
 
     @Autowired
     @Qualifier("empty")
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
+
+
 
     public OAuth2Token getToken(String username,String password){
         String authBase64 = configuration.encodeCredentials(clientId,

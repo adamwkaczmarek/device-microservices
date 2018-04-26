@@ -1,51 +1,32 @@
 package home.samples.device.services;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import home.samples.device.clients.DeviceControllerClient;
-import home.samples.device.clients.oAuth.AuthorizationCodeTokenService;
-import home.samples.device.clients.oAuth.OAuth2Token;
+
 import home.samples.device.dto.Dht22DataCreateDto;
 import home.samples.device.dto.Dht22DataDto;
+import home.samples.device.kafka.model.DeviceDataUpdateMsg;
+import home.samples.device.kafka.producers.DeviceDataUpdateProducer;
 import home.samples.device.model.Dht22Data;
 import home.samples.device.repository.Dht22DataRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
 public class Dht22DataService {
 
-    @Autowired
-    Dht22DataRepository dht22DataRepository;
 
-    @Autowired
-    DeviceControllerClient deviceControllerClient;
+    private final Dht22DataRepository dht22DataRepository;
+    private final DeviceDataUpdateProducer deviceDataUpdateProducer;
 
-    @Autowired
-    AuthorizationCodeTokenService authorizationCodeTokenService;
+    public Dht22DataService(Dht22DataRepository dht22DataRepository,
+        DeviceDataUpdateProducer deviceDataUpdateProducer) {
+        this.dht22DataRepository = dht22DataRepository;
+        this.deviceDataUpdateProducer = deviceDataUpdateProducer;
+    }
 
-    @Value("${security.tech-user-name}")
-    private String techUser;
-
-    @Value("${security.tech-password}")
-    private String techPassword;
-
-    @HystrixCommand(
-            commandProperties =
-                    {@HystrixProperty(
-                            name="execution.isolation.thread.timeoutInMilliseconds",
-                            value = "12000")})
     public Dht22DataDto add(Dht22DataCreateDto dht22DataCreateDto){
         Dht22DataDto dht22DataDto = Dht22DataDto.toDto(dht22DataRepository.save(new Dht22Data(dht22DataCreateDto)));
-        OAuth2Token token = authorizationCodeTokenService.getToken(techUser, techPassword);
+        deviceDataUpdateProducer.sendDeviceDataUpdateMsg(new DeviceDataUpdateMsg(dht22DataDto.getDeviceId(),"DHT_DATA","correlation-id"));
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        deviceControllerClient.sendSimpleMessage(dht22DataDto.getDeviceId(),token.getAccessToken(),"DHT data updated    "+df.format(dht22DataDto.getCreationDate()));
         return dht22DataDto;
     }
 
