@@ -49,12 +49,6 @@ public class Application {
         return template;
     }
 
-    @LoadBalanced
-    @Bean
-    @Qualifier("empty")
-    public RestTemplate getEmptyRestTemplate(){
-        return new RestTemplate();
-    }
 
     @Bean
     public UserContextFilter userContextFilter(){

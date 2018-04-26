@@ -25,14 +25,15 @@ public class AuthorizationCodeTokenService {
 
 
 
-    @Autowired
-    private AuthorizationCodeConfiguration configuration;
+    private final AuthorizationCodeConfiguration configuration;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    @Qualifier("empty")
-    private RestTemplate restTemplate;
-
-
+    public AuthorizationCodeTokenService(
+        AuthorizationCodeConfiguration configuration,
+        RestTemplate restTemplate) {
+        this.configuration = configuration;
+        this.restTemplate = restTemplate;
+    }
 
     public OAuth2Token getToken(String username,String password){
         String authBase64 = configuration.encodeCredentials(clientId,
