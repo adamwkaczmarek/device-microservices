@@ -22,3 +22,6 @@ security.jwt.client-secret: sct_secret
 security.tech-user-name: device
 security.tech-password: test
 
+redis.server: localhost
+redis.port: 6379
+

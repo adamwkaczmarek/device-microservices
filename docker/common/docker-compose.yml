@@ -9,6 +9,10 @@ services:
       environment:
         - ADVERTISED_HOST=localhost
         - ADVERTISED_PORT=9092
+ redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
  database:
       image: postgres:9.5
       ports:
