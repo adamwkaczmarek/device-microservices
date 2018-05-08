@@ -6,18 +6,7 @@ spring:
       dev
   cloud:
     config:
-      enabled: false
+      enabled: true
       label: devices-ms-config
-    stream:
-      kafka:
-        binder:
-          brokers: localhost:9092
-      bindings:
-        device-data-update-out:
-          destination: device-data-update
-          contentType: application/json
-
-queue:
-  data: DeviceDataQueue
 
 
