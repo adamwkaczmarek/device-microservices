@@ -15,18 +15,13 @@ public class Dht22DataService {
 
 
     private final Dht22DataRepository dht22DataRepository;
-    private final DeviceDataUpdateProducer deviceDataUpdateProducer;
 
-    public Dht22DataService(Dht22DataRepository dht22DataRepository,
-        DeviceDataUpdateProducer deviceDataUpdateProducer) {
+    public Dht22DataService(Dht22DataRepository dht22DataRepository) {
         this.dht22DataRepository = dht22DataRepository;
-        this.deviceDataUpdateProducer = deviceDataUpdateProducer;
     }
 
     public Dht22DataDto add(Dht22DataCreateDto dht22DataCreateDto){
         Dht22DataDto dht22DataDto = Dht22DataDto.toDto(dht22DataRepository.save(new Dht22Data(dht22DataCreateDto)));
-        deviceDataUpdateProducer.sendDeviceDataUpdateMsg(new DeviceDataUpdateMsg(dht22DataDto.getDeviceId(),"DHT_DATA",""));
-
         return dht22DataDto;
     }
 

@@ -161,6 +161,12 @@ services:
       AWS_REGION: ${AWS_REGION}
       TZ: Europe/Berlin
 
+ logspout:
+     image: gliderlabs/logspout
+     command: syslog://logs5.papertrailapp.com:52915
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+
 # device-state-service:
 #    image: akaczmarek/device-state-service:${BUILD_NAME}
 #    mem_limit: 2500m
