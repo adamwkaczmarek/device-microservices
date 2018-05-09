@@ -53,7 +53,7 @@ public class DeviceRegistrationClient {
         // redis cache check
         DeviceDto deviceDto = checkRedisCache(deviceId);
         if(deviceDto!=null){
-            log.debug(" Device {} found in redis cache ",deviceDto.getDeviceId());
+            log.info(" Device {} found in redis cache ",deviceDto.getDeviceId());
             return deviceDto;
         }
 
