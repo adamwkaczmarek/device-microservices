@@ -115,6 +115,7 @@ services:
       - "eureka-service:eureka-service"
       - "zuul-service:zuul-service"
       - "authentication-service"
+      - "device-registration-service:device-registration-service"
     environment:
       PROFILE: "dev"
       SERVER_PORT: "8087"
@@ -126,6 +127,7 @@ services:
       EUREKASERVER_PORT:   "8761"
       ZULLSERVER_PORT: "5555"
       AUTHSERVER_PORT: "8091"
+      DEVICE_REG_PORT: "8083"
       ENCRYPT_KEY:     "SPRING_CLOUD_DEV"
       AWS_KEY_ID : ${AWS_KEY_ID}
       AWS_SECRET_KEY: ${AWS_SECRET_KEY}

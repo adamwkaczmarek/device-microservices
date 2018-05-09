@@ -20,7 +20,7 @@ public class DeviceDataUpdateProducer {
     }
 
     public void sendDeviceDataUpdateMsg(DeviceDataUpdateMsg updateMsg){
-        log.debug("Sending device update message {}" ,updateMsg);
+        log.info("Sending device update message {}" ,updateMsg);
 
         MessageChannel messageChannel = streams.outboundDeviceDataUpdate();
         messageChannel.send(MessageBuilder.withPayload(updateMsg).setHeader(MessageHeaders.CONTENT_TYPE,

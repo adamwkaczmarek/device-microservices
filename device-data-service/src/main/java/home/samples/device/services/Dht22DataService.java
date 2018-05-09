@@ -25,7 +25,7 @@ public class Dht22DataService {
 
     public Dht22DataDto add(Dht22DataCreateDto dht22DataCreateDto){
         Dht22DataDto dht22DataDto = Dht22DataDto.toDto(dht22DataRepository.save(new Dht22Data(dht22DataCreateDto)));
-        deviceDataUpdateProducer.sendDeviceDataUpdateMsg(new DeviceDataUpdateMsg(dht22DataDto.getDeviceId(),"DHT_DATA","correlation-id"));
+        deviceDataUpdateProducer.sendDeviceDataUpdateMsg(new DeviceDataUpdateMsg(dht22DataDto.getDeviceId(),"DHT_DATA",""));
 
         return dht22DataDto;
     }

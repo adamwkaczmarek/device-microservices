@@ -21,7 +21,6 @@ public class DeviceRegistrationController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<DeviceDto> getAllDevices(){
-        //String correlationId = UserContextHolder.getContext().getCorrelationId();
         return deviceRegistrationService.findAll();
     }
 
