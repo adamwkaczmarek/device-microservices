@@ -25,6 +25,12 @@ while ! `nc -z zuul-service $ZULLSERVER_PORT`; do sleep 3; done
 echo "*******  Zuul Server has started"
 
 echo "********************************************************"
+echo "Waiting for the device registration service to start on port $DEVICE_REG_PORT"
+echo "********************************************************"
+while ! `nc -z device-registration-service $DEVICE_REG_PORT`; do sleep 3; done
+echo "*******  Device registration Server has started"
+
+echo "********************************************************"
 echo "Starting device-controller-service"
 echo "********************************************************"
 java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT   \

@@ -7,13 +7,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-#Setting the logging levels for the service
-logging:
-  level:
-    com.netflix: DEBUG
-    org.springframework.web: DEBUG
-    home.samples: DEBUG
-
 #security:
 # oauth2:
 #  resource:
@@ -21,7 +14,6 @@ logging:
 
 #security.oauth2.resource.filter-order: 3
 #security.signing-key: 345345fsdfsf5345
-#
 #
 #spring.jpa.database: "POSTGRESQL"
 #spring.datasource.platform:  "postgres"
@@ -33,3 +25,4 @@ logging:
 #spring.datasource.testWhileIdle: "true"
 #spring.datasource.validationQuery: "SELECT 1"
 #spring.jpa.properties.hibernate.dialect: "org.hibernate.dialect.PostgreSQLDialect"
+

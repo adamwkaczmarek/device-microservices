@@ -23,12 +23,12 @@ public class Consumer {
     @JmsListener(destination = "${queue.registration}")
     public void processRegMessage(@Payload String message) throws IOException {
         String decodedMsg = new String(Base64.decodeBase64(message));
-        log.info("Processing {}  in queue registration", decodedMsg);
+        log.debug("Processing {}  in queue registration", decodedMsg);
         RegMsg regMsg = new ObjectMapper()
             .readerFor(RegMsg.class)
             .readValue(decodedMsg.trim());
         DeviceDto deviceDto = deviceRegistrationService.add(regMsg);
-        log.info("Device {} updated !" , deviceDto.getDeviceId());
+        log.info("Device {} registered !" , deviceDto.getDeviceId());
 
     }
 
@@ -36,8 +36,9 @@ public class Consumer {
     @JmsListener(destination = "${queue.deviceHealth}")
     public void processDeviceHealthMessage(@Payload String message) throws IOException {
         String decodedMsg = new String(Base64.decodeBase64(message));
-        log.info("Processing {}  in queue deviceHealth", decodedMsg);
+        log.debug("Processing {}  in queue deviceHealth", decodedMsg);
         String deviceId=decodedMsg.trim();
         deviceRegistrationService.register(deviceId);
+        log.info("Device {} health check !" , deviceId);
     }
 }

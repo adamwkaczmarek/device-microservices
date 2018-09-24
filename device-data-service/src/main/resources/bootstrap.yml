@@ -9,7 +9,4 @@ spring:
       enabled: true
       label: devices-ms-config
 
-queue:
-  data: DeviceDataQueue
-
 

@@ -3,9 +3,10 @@ package home.samples.device.services;
 import com.amazonaws.services.iot.client.AWSIotException;
 import com.amazonaws.services.iot.client.AWSIotMqttClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import home.samples.device.clients.DeviceRegistrationClient;
 import home.samples.device.dto.DeviceDto;
-import home.samples.device.dto.DeviceMessageDto;
+import home.samples.device.dto.SimpleMessageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -22,8 +23,12 @@ public class DeviceControllerService {
     DeviceRegistrationClient deviceRegistrationClient;
 
 
-    @HystrixCommand
-    public void sendMessageToDeviceTopic(DeviceMessageDto messageDto,String deviceId) throws AWSIotException, IOException {
+    @HystrixCommand(
+            commandProperties =
+                    {@HystrixProperty(
+                            name="execution.isolation.thread.timeoutInMilliseconds",
+                            value = "12000")})
+    public void sendMessageToDeviceTopic(SimpleMessageDto messageDto, String deviceId) throws AWSIotException, IOException {
 
         DeviceDto device = deviceRegistrationClient.getDevice(deviceId);
         String awsAccessKeyId = System.getenv("AWS_KEY_ID");

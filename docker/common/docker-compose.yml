@@ -1,5 +1,18 @@
 version: '2'
 services:
+ kafkaserver:
+      image: spotify/kafka
+      mem_limit: 1073741824
+      ports:
+        - 2181:2181
+        - 9092:9092
+#      environment:
+#        - ADVERTISED_HOST=localhost
+#        - ADVERTISED_PORT=9092
+ redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
  database:
       image: postgres:9.5
       ports:
@@ -13,6 +26,8 @@ services:
    mem_limit: 3000m
    ports:
       - "8761:8761"
+   environment:
+      TZ: Europe/Berlin
  config-service:
    image: akaczmarek/config-service:${BUILD_NAME_SCT}
    mem_limit: 2500m
@@ -24,6 +39,7 @@ services:
      EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
      EUREKASERVER_PORT: "8761"
      ENCRYPT_KEY: "SPRING_CLOUD_DEV"
+     TZ: Europe/Berlin
  zuul-service:
     image: akaczmarek/zuul-service:${BUILD_NAME_SCT}
     mem_limit: 3000m
@@ -39,6 +55,7 @@ services:
       EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
       EUREKASERVER_PORT:        "8761"
       CONFIGSERVER_PORT:        "8888"
+      TZ: Europe/Berlin
 
 
  authentication-service:
@@ -59,6 +76,7 @@ services:
       CONFIGSERVER_URI: "http://config-service:8888"
       EUREKASERVER_URI: "http://eureka-service:8761/eureka/"
       ENCRYPT_KEY:       "SPRING_CLOUD_DEV"
+      TZ: Europe/Berlin
 
  device-registration-service:
     image: akaczmarek/device-registration-service:${BUILD_NAME}
@@ -85,6 +103,7 @@ services:
       AWS_KEY_ID : ${AWS_KEY_ID}
       AWS_SECRET_KEY: ${AWS_SECRET_KEY}
       AWS_REGION: ${AWS_REGION}
+      TZ: Europe/Berlin
 
  device-controller-service:
     image: akaczmarek/device-controller-service:${BUILD_NAME}
@@ -96,6 +115,7 @@ services:
       - "eureka-service:eureka-service"
       - "zuul-service:zuul-service"
       - "authentication-service"
+      - "device-registration-service:device-registration-service"
     environment:
       PROFILE: "dev"
       SERVER_PORT: "8087"
@@ -107,10 +127,12 @@ services:
       EUREKASERVER_PORT:   "8761"
       ZULLSERVER_PORT: "5555"
       AUTHSERVER_PORT: "8091"
+      DEVICE_REG_PORT: "8083"
       ENCRYPT_KEY:     "SPRING_CLOUD_DEV"
       AWS_KEY_ID : ${AWS_KEY_ID}
       AWS_SECRET_KEY: ${AWS_SECRET_KEY}
       AWS_REGION: ${AWS_REGION}
+      TZ: Europe/Berlin
 
  device-data-service:
     image: akaczmarek/device-data-service:${BUILD_NAME}
@@ -137,6 +159,13 @@ services:
       AWS_KEY_ID : ${AWS_KEY_ID}
       AWS_SECRET_KEY: ${AWS_SECRET_KEY}
       AWS_REGION: ${AWS_REGION}
+      TZ: Europe/Berlin
+
+ logspout:
+     image: gliderlabs/logspout
+     command: syslog://logs5.papertrailapp.com:52915
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
 
 # device-state-service:
 #    image: akaczmarek/device-state-service:${BUILD_NAME}

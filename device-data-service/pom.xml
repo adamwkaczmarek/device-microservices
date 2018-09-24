@@ -86,6 +86,24 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.16</version>
@@ -102,7 +120,12 @@
             <artifactId>spring-cloud-common</artifactId>
             <version>1.0.2</version>
         </dependency>
-         <dependency>
+        <dependency>
+            <groupId>home.samples</groupId>
+            <artifactId>device-common</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>amazon-sqs-java-messaging-lib</artifactId>
             <version>1.0.4</version>
