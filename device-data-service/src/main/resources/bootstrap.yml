@@ -3,10 +3,13 @@ spring:
     name: device-data-service
   profiles:
     active:
-      default
+      dev
   cloud:
     config:
       enabled: true
       label: devices-ms-config
+
+queue:
+  data: DeviceDataQueue
 
 

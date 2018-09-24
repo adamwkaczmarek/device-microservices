@@ -1,6 +1,7 @@
 package home.samples.device.model;
 
 import home.samples.device.dto.DeviceDto;
+import home.samples.device.sqs.RegMsg;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,27 +21,28 @@ public class Device {
 
     @Id
     @Column(name = "device_id", nullable = false)
-    private String id;
+    private String deviceId;
 
-    @Column(name = "ip_address", nullable = false)
-    private String ipAddress;
+    @Column(name = "arn_endpoint", nullable = false)
+    private String arnEndpoint;
 
-    @Column(name = "listening_port", nullable = false)
-    private String listeningPort;
+    @Column(name = "topic", nullable = false)
+    private String topic;
 
-    @Column(name = "comment", nullable = false)
-    private String comment;
+    @Column(name = "device_desc", nullable = false)
+    private String deviceDesc;
 
     @Column(name= "last_registration_date", nullable = false)
     private Date lastRegistrationDate;
 
     public Device(DeviceDto deviceDto) {
-         this.id=deviceDto.getDeviceId();
-         this.ipAddress=deviceDto.getIpAddress();
-         this.listeningPort=deviceDto.getListeningPort();
-         this.comment=deviceDto.getComment();
+         this.deviceId=deviceDto.getDeviceId();
+         this.arnEndpoint=deviceDto.getArnEndpoint();
+         this.topic=deviceDto.getTopic();
+         this.deviceDesc=deviceDto.getDeviceDesc();
          lastRegistrationDate=new Date();
     }
+
 
     public void updateRegistrationDate(){
         lastRegistrationDate=new Date();

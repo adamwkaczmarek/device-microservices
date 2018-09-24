@@ -3,10 +3,14 @@ spring:
     name: device-registration-service
   profiles:
     active:
-      default
+      dev
   cloud:
     config:
       enabled: true
       label: devices-ms-config
+
+queue:
+    registration: RegisterDevicesQueue
+    deviceHealth: DeviceHealthQueue
 
 

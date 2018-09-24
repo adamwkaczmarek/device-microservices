@@ -1,6 +1,7 @@
 package home.samples.device.dto;
 
 import home.samples.device.model.Device;
+import home.samples.device.sqs.RegMsg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,17 +17,26 @@ public class DeviceDto {
 
 
     private String deviceId;
-    private String ipAddress;
-    private String listeningPort;
-    private String comment;
+    private String arnEndpoint;
+    private String topic;
+    private String deviceDesc;
 
 
      public static DeviceDto toDto(Device device) {
         return new DeviceDto(
-            device.getId(),
-            device.getIpAddress(),
-            device.getListeningPort(),
-            device.getComment()
+            device.getDeviceId(),
+            device.getArnEndpoint(),
+            device.getTopic(),
+            device.getDeviceDesc()
+         );
+    }
+
+       public static DeviceDto toDto(RegMsg regMsg) {
+        return new DeviceDto(
+            regMsg.getDeviceId(),
+            regMsg.getDeviceDetails().getArnEndpoint(),
+            regMsg.getDeviceDetails().getTopic(),
+            regMsg.getDeviceDetails().getDeviceDesc()
          );
     }
 

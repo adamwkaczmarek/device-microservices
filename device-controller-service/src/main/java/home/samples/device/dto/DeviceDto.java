@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class DeviceDto {
 
-
     private String deviceId;
-    private String ipAddress;
-    private String listeningPort;
-    private String comment;
+    private String arnEndpoint;
+    private String topic;
+    private String deviceDesc;
 
 
 }
